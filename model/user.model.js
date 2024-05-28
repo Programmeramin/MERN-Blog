@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import { type } from "os";
-
 
 // create mongoose schema
 const userSchema = new mongoose.Schema({
