@@ -1,13 +1,15 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react"
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
 
 const Signin = () => {
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const {loading, error :  errorMessage} = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) =>{
     setFormData({...formData, [e.target.id] : e.target.value.trim()});
@@ -18,12 +20,11 @@ const Signin = () => {
     e.preventDefault();
 
     if(!formData.email || !formData.password){
-      return setErrorMessage("Please fill out all fields");
+      return dispatch(signInFailure("All fields are required"));
     }
     
     try {
-      setLoading(true);
-      setErrorMessage(true);
+      dispatch(signInStart());
       const res = await fetch ("/api/auth/signin", {
         method : "POST", 
         headers : {"Content-Type" : "application/json"},
@@ -31,15 +32,14 @@ const Signin = () => {
       }); 
       const data = await res.json()
       if(data.success === false){
-        return setErrorMessage(data.message);
+        dispatch(signInFailure(data.message))
       }    
-      setLoading(false);
       if(res.ok){
+        dispatch(signInSuccess(data))
         navigate("/")
       }
     } catch (error) {
-      setErrorMessage(error.message)
-      setLoading(false)
+      dispatch(signInFailure(error.message))
     }
  
   };
@@ -78,7 +78,7 @@ const Signin = () => {
                     <Spinner size="sm"/>
                     <span className="pl-3">loading...</span>
                     </>
-                  ) : "  Sign Up"
+                  ) : "  Sign In"
                 }
               </Button>
              </form>
