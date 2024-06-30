@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route,} from 'react-router-dom'
 
 import './App.css'
 import Home from './pages/Home'
@@ -8,6 +8,7 @@ import Signup from './pages/Signup'
 import Projects from './pages/Projects'
 import Dashboard from './pages/Dashboard'
 import Header from './Components/Header'
+import FooterCom from './Components/Footer'
 
 function App() {
   
@@ -17,7 +18,6 @@ function App() {
    <BrowserRouter>
    <Header/>
      <Routes>
-    
         <Route path='/' element={<Home/>}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/sign-in' element={<Signin/>}/>
@@ -25,6 +25,7 @@ function App() {
         <Route path='/projects' element={<Projects/>}/>
         <Route path='/dashboard' element={<Dashboard/>}/>
      </Routes>
+     <FooterCom/>
    </BrowserRouter>
     </>
   )

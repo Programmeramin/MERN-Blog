@@ -3,6 +3,7 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
+import OAuth from "../Components/OAuth";
 
 const Signin = () => {
 
@@ -81,19 +82,19 @@ const Signin = () => {
                   ) : "  Sign In"
                 }
               </Button>
+              <OAuth/>
              </form>
              <div className="flex gap-2 text-sm mt-5">
               <span>{`Don't`}Have an account</span>
-              <Link to="/sign-up" className="text-blue-500 hover:underline">Sign In</Link>     
+              <Link to="/sign-up" className="text-blue-500 hover:underline">Sign Up</Link>     
              </div>
-
-             { 
+             {                
                errorMessage && (
                 <Alert className="mt-5" color="failure">
                {errorMessage}
                 </Alert>
                )
-             }
+             } 
         </div>
       </div>
       </div>

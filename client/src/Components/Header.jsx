@@ -3,10 +3,15 @@ import { Link, useLocation } from "react-router-dom"
 import { IoSearch } from "react-icons/io5";
 import { FaMoon } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { toggleTheme } from "../redux/theme/themeSlice";
+import { FaSun } from "react-icons/fa6";
 
 const Header = () => {
     const path = useLocation().pathname;
+    const dispatch = useDispatch();
     const {currentUser} = useSelector(state => state.user);
+    const {theme} = useSelector((state) => state.theme);
 
   return (
     <>
@@ -23,10 +28,11 @@ const Header = () => {
         <IoSearch/>
       </Button>
       <div className="flex gap-2 md:order-2">
-        <Button className="w-12 h-12 hidden sm:inline" color="gray" pill>
-           <FaMoon/>
-        </Button>
+        <Button className="w-12 h-12 hidden sm:inline" color="gray" pill onClick={() => dispatch(toggleTheme())}>
 
+            {theme === "light" ? <FaSun/> : <FaMoon/>}
+        </Button>
+   
         {currentUser ? (
           <Dropdown arrowIcon={false} inline label={
             <Avatar 

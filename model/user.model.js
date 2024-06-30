@@ -21,14 +21,20 @@ const userSchema = new mongoose.Schema({
         unique : true,
     },
 
+    profilePicture : {
+        type: String,
+        default : "",
+    },
+
     status: {
         type: Boolean,
         default: true,
       },
-      trash: {
+
+    trash: {
         type: Boolean,
         default: false,
-      },
+    },
 
 },{timestamps : true});
 
